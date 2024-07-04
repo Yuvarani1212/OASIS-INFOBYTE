@@ -57,22 +57,41 @@ Features:
 📍Data cleaning and preprocessing to handle missing values and ensure data quality
 
 📍Exploratory data analysis (EDA) to visualize unemployment trends over time and across different regions
+
 📍Statistical analysis to identify key factors influencing unemployment rates
+
 📍Time series analysis to forecast future unemployment trends
+
 📍Presentation of findings through comprehensive visualizations and reports
+
 Technologies: Python, pandas, NumPy, matplotlib, seaborn, statsmodels, Jupyter Notebook
 
+Project 3: CAR PRICE PREDICTION WITH MACHINE LEARNING
 
-[Project 3: Predictive Maintenance](link to project)
-Description: Developed a predictive maintenance model to predict equipment failures using historical maintenance data. This project involved feature engineering, model training, and evaluation.
-Technologies: Python, scikit-learn, TensorFlow
-[Project 4: Sentiment Analysis](link to project)
-Description: Built a sentiment analysis model to analyze customer reviews and feedback. This project included data preprocessing, text analysis, and model building.
-Technologies: Python, NLTK, scikit-learn
-[Project 5: Dashboard Development](link to project)
-Description: Created interactive dashboards to visualize key performance indicators and business metrics. This project helped improve decision-making processes within the company.
-Technologies: Tableau, Power BI
+Description: A machine learning project aimed at predicting the prices of used cars based on various features such as make, model, year, mileage, and more. The goal is to build a model that can accurately estimate the
+
+market value of a car, assisting sellers and buyers in making informed decisions.
+
+Features:
+
+📍Data collection from online sources and datasets containing car listings
+
+📍Data cleaning and preprocessing to handle missing values, categorical data, and outliers
+
+📍Exploratory data analysis (EDA) to understand relationships between features and car prices
+
+📍Feature engineering to create new relevant features and improve model performance
+
+📍Implementation of various regression algorithms (e.g., Linear Regression, Decision Tree, Random Forest, Gradient Boosting)
+
+📍Model evaluation and comparison using metrics like Mean Absolute Error (MAE), Mean Squared Error (MSE), and R-squared
+
+📍Hyperparameter tuning to optimize model performance
+
+📍Deployment of the model using a web framework for user interaction
+
+Technologies: Python, pandas, NumPy, scikit-learn, matplotlib, seaborn, Flask/Django (for deployment)
+
 Connect with Me
-Email: [Your Email Address]
-LinkedIn: [Your LinkedIn Profile]
-Twitter: [Your Twitter Profile]
+Email: yuvaranisaravanan1212@gmail.com
+LinkedIn: https://www.linkedin.com/in/yuvarani-saravanan-a809ba27b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app
