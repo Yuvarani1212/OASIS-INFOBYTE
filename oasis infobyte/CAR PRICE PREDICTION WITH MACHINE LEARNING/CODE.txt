@@ -1,0 +1,108 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
+
+# Data Generation
+np.random.seed(42)
+brands = ['Toyota', 'Ford', 'BMW', 'Honda', 'Chevrolet']
+models = ['ModelA', 'ModelB', 'ModelC', 'ModelD', 'ModelE']
+years = np.random.randint(2000, 2022, size=1000)
+mileages = np.random.randint(5000, 200000, size=1000)
+horsepowers = np.random.randint(100, 400, size=1000)
+prices = (years - 2000) * 200 + horsepowers * 10 + (200000 - mileages) * 0.02 + np.random.normal(0, 5000, size=1000)
+
+data = {
+    'Brand': np.random.choice(brands, size=1000),
+    'Model': np.random.choice(models, size=1000),
+    'Year': years,
+    'Mileage': mileages,
+    'Horsepower': horsepowers,
+    'Price': prices
+}
+df = pd.DataFrame(data)
+df.to_csv('car_prices.csv', index=False)
+
+# Main Analysis
+df = pd.read_csv('car_prices.csv')
+
+plt.figure(figsize=(10, 6))
+sns.histplot(df['Price'], bins=30, kde=True)
+plt.title('Distribution of Car Prices')
+plt.xlabel('Price')
+plt.ylabel('Frequency')
+plt.show()
+
+plt.figure(figsize=(10, 6))
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
+plt.title('Correlation Heatmap')
+plt.show()
+
+X = df.drop('Price', axis=1)
+y = df['Price']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+numeric_features = ['Year', 'Mileage', 'Horsepower']
+categorical_features = ['Brand', 'Model']
+
+numeric_transformer = Pipeline(steps=[
+    ('scaler', StandardScaler())
+])
+
+categorical_transformer = Pipeline(steps=[
+    ('onehot', OneHotEncoder(handle_unknown='ignore'))
+])
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numeric_transformer, numeric_features),
+        ('cat', categorical_transformer, categorical_features)
+    ])
+
+model = Pipeline(steps=[
+    ('preprocessor', preprocessor),
+    ('regressor', RandomForestRegressor(n_estimators=100, random_state=42))
+])
+
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+mae = mean_absolute_error(y_test, y_pred)
+print(f'Mean Absolute Error: ${mae:.2f}')
+
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test, y_pred, alpha=0.7)
+plt.xlabel('Actual Prices')
+plt.ylabel('Predicted Prices')
+plt.title('Actual vs Predicted Prices')
+plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', linestyle='--')
+plt.show()
+
+# Additional Graphical Representations
+
+# Feature Importance
+importances = model.named_steps['regressor'].feature_importances_
+feature_names = numeric_features + list(model.named_steps['preprocessor'].named_transformers_['cat'].named_steps['onehot'].get_feature_names(categorical_features))
+feature_importance_df = pd.DataFrame({'Feature': feature_names, 'Importance': importances})
+feature_importance_df = feature_importance_df.sort_values(by='Importance', ascending=False)
+
+plt.figure(figsize=(10, 6))
+sns.barplot(x='Importance', y='Feature', data=feature_importance_df)
+plt.title('Feature Importance')
+plt.show()
+
+# Distribution of Errors
+errors = y_test - y_pred
+plt.figure(figsize=(10, 6))
+sns.histplot(errors, bins=30, kde=True)
+plt.title('Distribution of Prediction Errors')
+plt.xlabel('Error')
+plt.ylabel('Frequency')
+plt.show()
